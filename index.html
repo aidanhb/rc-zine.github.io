@@ -1,0 +1,67 @@
+<header>
+    <h1>
+        RC Zine
+    </h1>
+    <script src="modal.js"> </script>
+    <link rel = "stylesheet" type = "text/css" href = "style.css" />
+</header>
+
+<section id="volumes">
+    <div class="volume hover-expand" onclick="openModal();currentPage(1, 1)"></div>
+    <div class="volume submit"></div>
+</section>
+    
+<section class="modal" id="modal-viewer">
+    <span class="close cursor" onclick="closeModal()">&times;</span>
+
+    <div class="modal-content">
+        <div class="volume-contents">
+            <div class="pages">
+                <img src="images/volume1_pg1.png" class="page">
+                <img src="images/volume1_pg2.png" class="page">
+            </div>
+            <div class="pages">
+                <img src="images/volume1_pg3.png" class="page">
+                <img src="images/volume1_pg4.png" class="page">
+            </div>
+            <div class="pages">
+                <img src="images/volume1_pg5.png" class="page">
+                <img src="images/volume1_pg6.png" class="page">
+            </div>
+            <div class="pages">
+                <img src="images/volume1_pg7.png" class="page">
+                <img src="images/volume1_pg8.png" class="page">
+            </div>
+            <div class="pages">
+                <img src="images/volume1_pg9.png" class="page">
+                <img src="images/volume1_pg10.png" class="page">
+            </div>
+            <div class="pages">
+                <img src="images/volume1_pg11.png" class="page">
+                <img src="images/volume1_pg12.png" class="page">
+            </div>
+            <div class="pages">
+                <img src="images/volume1_pg13.png" class="page">
+                <img src="images/volume1_pg14.png" class="page">
+            </div>
+            <div class="pages">
+                <img src="images/volume1_pg15.png" class="page">
+                <img src="images/volume1_pg16.png" class="page">
+            </div>
+            <div class="pages">
+                <img src="images/volume1_pg17.png" class="page">
+                <img src="images/volume1_pg18.png" class="page">
+            </div>
+        </div>
+    </div>
+
+    <a class="prev" onclick="plusPages(-1)">&#10094;</a>
+    <a class="next" onclick="plusPages(1)">&#10095;</a>
+</section>
+
+<section class="banner">
+    <p>
+        Next zine WITCHCRAFT to be published October 31, 2019:
+        <a href="https://community.recurse.com/t/announcing-volume-ii-of-the-rc-zine-submit-your-creations/4237">Submit!</a>
+    </p>
+</section>
