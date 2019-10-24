@@ -37,6 +37,7 @@ function currentPage(v, n) {
 }
 
 function showDesktop(pages) {
+  pages[0].style.marginTop = "0px";
 
   for (i = 0; i < pages.length; i++) {
     pages[i].style.display = "none";
@@ -51,10 +52,11 @@ function showDesktop(pages) {
 
 function showPhone(pages) {
   /* This changes modal display for the phone*/
-
+  pages[0].style.marginTop = "8px";
   for (i = 0; i < pages.length; i++) {
     pages[i].style.display = "block";
     each_page = pages[i].getElementsByClassName("page");
+  
     for (j=0; j<each_page.length; j++) {
       each_page[j].style.display = "block";
       each_page[j].style.width = "90%";
@@ -74,15 +76,19 @@ function showPages(v, n) {
 }
 
 function setShowDevice() {
-  if (window.matchMedia("(max-width:500px)").matches) {
+  if (window.matchMedia("only screen and (min-device-width : 375px) and (max-device-width : 812px)").matches) {
     document.getElementById("body").style.fontSize = "14px";
     document.getElementById("prev").style.display = "none";
     document.getElementById("next").style.display = "none";
+    document.getElementById("close").style.transform = "scale(2)";
+    document.getElementById("modal-viewer").style.backgroundColor = "black";
     showDevice = showPhone;
   } else {
     document.getElementById("body").style.fontSize = "16px";
     document.getElementById("prev").style.display = "block";
     document.getElementById("next").style.display = "block";
+    document.getElementById("modal-viewer").style.backgroundColor = "rgba(0, 0, 0, 0.5)";
+    document.getElementById("close").style.transform = "scale(1)";
     showDevice = showDesktop;
   }
 }
