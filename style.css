@@ -73,7 +73,7 @@ body {
 .close {
     color: white;
     position: absolute;
-    top: 0px;
+    top: 10px;
     left: 25px;
     font-size: 35px;
     font-weight: bold;

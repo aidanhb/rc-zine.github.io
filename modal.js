@@ -2,20 +2,6 @@ var volumeIndex = 1;
 var pageIndex = 1;
 var showDevice = showDesktop;
 
-function setOnClick() {
-  var onPhone = window.matchMedia("(max-width: 400px)");
-  var volumes = document.getElementsByClassName("volume");
-  if (onPhone) {
-    for (i=0; i<volumes.length; i++) {
-      volumes[i].onclick = function() {}
-    }
-  } else {
-    for (i=0; i<volumes.length; i++) {
-      volumes[i].onclick = function() {currentPage(i, 1); openModal();}
-    }
-  }
-}
-
 function closeModal() {
     document.getElementById("modal-viewer").style.display = "none";
     volumeIndex = 1;
