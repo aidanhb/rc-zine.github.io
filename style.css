@@ -1,4 +1,7 @@
 .title {
+    width: 50vw;
+    margin-left:auto;
+    margin-right:auto;
     padding-top: 0.5em;
     text-align: center;
 }
@@ -19,7 +22,6 @@ body {
     display: flex;
     text-align: center;
     justify-content: center;
-    align-items: center;
 }
 
 .volume:hover {
@@ -34,25 +36,6 @@ body {
     height: 29em;
     padding: 1em;
 }
-    
-/* @media (max-width:700px) {
-    body{
-        font-size: 14px;
-    }
-    .prev, .next {
-        display: none;
-    }
-    .close {
-        transform: scale(2.0);
-    }
-    .modal {
-        background-color: black;
-    }
-    .page {
-        display: block;
-        width: 90vw;
-    }
-} */
 
 .banner {
     text-align: center;

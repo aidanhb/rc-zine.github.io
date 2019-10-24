@@ -77,13 +77,17 @@ function showPages(v, n) {
 
 function setShowDevice() {
   if (window.matchMedia("only screen and (min-device-width : 375px) and (max-device-width : 812px)").matches) {
-    document.getElementById("body").style.fontSize = "14px";
+    document.getElementById("title").style.textAlign = "left";
+    document.getElementById("title").style.width = "80vw";
+    document.getElementById("body").style.fontSize = "36px";
     document.getElementById("prev").style.display = "none";
     document.getElementById("next").style.display = "none";
     document.getElementById("close").style.transform = "scale(2)";
     document.getElementById("modal-viewer").style.backgroundColor = "black";
     showDevice = showPhone;
   } else {
+    document.getElementById("title").style.textAlign = "center";
+    document.getElementById("title").style.width = "50vw";
     document.getElementById("body").style.fontSize = "16px";
     document.getElementById("prev").style.display = "block";
     document.getElementById("next").style.display = "block";
