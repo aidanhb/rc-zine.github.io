@@ -1,15 +1,17 @@
+var volumeIndex = 1;
+var pageIndex = 1;
+
 function closeModal() {
     document.getElementById("modal-viewer").style.display = "none";
     document.getElementById("content").style.opacity = 1.0;
+    volumeIndex = 1;
+    pageIndex = 1;
 }
 
 function openModal() {
     document.getElementById("modal-viewer").style.display = "block";
     document.getElementById("content").style.opacity = 0.3;
 }
-
-var volumeIndex = 1;
-var pageIndex = 1;
 
 // Next/previous controls
 function plusPages(n) {
@@ -27,8 +29,8 @@ function showPages(v, n) {
   if (v > volumes.length) {volumeIndex = 1}
   if (v < 1) {volumeIndex = volumes.length}
   var pages = volumes[volumeIndex-1].getElementsByClassName("pages");
-  if (n > pages.length) {pageIndex = 1}
-  if (n < 1) {pageIndex = pages.length}
+  if (n > pages.length) {pageIndex = pages.length}
+  if (n < 1) {pageIndex = 1}
   for (i = 0; i < pages.length; i++) {
     pages[i].style.display = "none";
   }
