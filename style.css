@@ -24,17 +24,22 @@ body {
     justify-content: center;
 }
 
-.volume:hover {
+.cover:hover {
     transform: scale(1.1);
     cursor: pointer;
 }
 
 .volume {
     display: inline-block;
-    transition: 0.3s ease;
-    width: 22.25em;
-    height: 29em;
+    width: 20em;
+    height: 25em;
     padding: 1em;
+}
+
+.cover {
+    transition: 0.3s ease;
+    width: 100%;
+    height: 100%;
 }
 
 .banner {
@@ -44,6 +49,12 @@ body {
     left:0px;
     bottom:0px;
     width:100%;
+}
+
+.download {
+    position: relative;
+    top: 1.2em;
+    height: 1em;
 }
 
 /* The Modal (background) */
