@@ -50,10 +50,13 @@ function showPhone(pages) {
 }
 
 function showPages(v, n) {
-  var i;
   var volumes = document.getElementsByClassName("volume-contents");
+  for (i = 0; i < volumes.length; i++) {
+    volumes[i].style.display = "none";
+  }
   if (v > volumes.length) {volumeIndex = 1}
   if (v < 1) {volumeIndex = volumes.length}
+  volumes[volumeIndex-1].style.display = "block";
   var pages = volumes[volumeIndex-1].getElementsByClassName("pages");
   if (n > pages.length) {pageIndex = pages.length}
   if (n < 1) {pageIndex = 1}
@@ -81,6 +84,15 @@ function setShowDevice() {
     document.getElementById("close").style.lineHeight = "auto";
     document.getElementById("modal-viewer").style.backgroundColor = "rgba(0, 0, 0, 0.5)";
     showDevice = showDesktop;
+  }
+}
+
+window.onkeydown = function(e) {
+  var event = window.event ? window.event : e;
+  if (event.keyCode == 37) {
+    plusPages(-1);
+  } else if (event.keyCode == 39) {
+    plusPages(1);
   }
 }
 
