@@ -45,6 +45,7 @@ body {
 }
 
 .banner {
+    display: none;
     font-size: 3em;
     text-align: center;
     background-color: darkviolet;
