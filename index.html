@@ -1,5 +1,12 @@
 <header>
-    <script src="modal.js"> </script>
+    <!-- Load React. -->
+    <!-- Note: when deploying, replace "development.js" with "production.min.js". -->
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+
+    <!-- Load our React component. -->
+    <script src="index.js" type="text/babel"> </script>
     <link rel = "stylesheet" type = "text/css" href = "style.css" />
 </header>
 
@@ -8,106 +15,7 @@
         RECURSE: A Guide to the New Programming Language, Part 1
     </h1>
 
-    <section class="volumes">
-        <div class="volume">
-            <img src="images/volume1_cover.png" class="cover" onclick="currentPage(1, 1); openModal()">
-            <a href="downloads/volume1.zip" class="download" download>
-                Download PDF
-            </a>
-        </div>
-        <div class="volume">
-            <img src="images/volume2_cover.png" class="cover" onclick="currentPage(2, 1); openModal()">
-            <a href="downloads/volume2.zip" class="download" download>
-                Download PDF
-            </a>
-        </div>
-    </section>
-        
-    <section class="modal" id="modal-viewer">
-        <span class="close cursor" id="close" onclick="closeModal()">&times;</span>
-
-        <div class="modal-content">
-            <div class="volume-contents">
-                <div class="pages">
-                    <img src="images/volume1_pg1.png" class="page">
-                    <img src="images/volume1_pg2.png" class="page">
-                </div>
-                <div class="pages">
-                    <img src="images/volume1_pg3.png" class="page">
-                    <img src="images/volume1_pg4.png" class="page">
-                </div>
-                <div class="pages">
-                    <img src="images/volume1_pg5.png" class="page">
-                    <img src="images/volume1_pg6.png" class="page">
-                </div>
-                <div class="pages">
-                    <img src="images/volume1_pg7.png" class="page">
-                    <img src="images/volume1_pg8.png" class="page">
-                </div>
-                <div class="pages">
-                    <img src="images/volume1_pg9.png" class="page">
-                    <img src="images/volume1_pg10.png" class="page">
-                </div>
-                <div class="pages">
-                    <img src="images/volume1_pg11.png" class="page">
-                    <img src="images/volume1_pg12.png" class="page">
-                </div>
-                <div class="pages">
-                    <img src="images/volume1_pg13.png" class="page">
-                    <img src="images/volume1_pg14.png" class="page">
-                </div>
-                <div class="pages">
-                    <img src="images/volume1_pg15.png" class="page">
-                    <img src="images/volume1_pg16.png" class="page">
-                </div>
-                <div class="pages">
-                    <img src="images/volume1_pg17.png" class="page">
-                    <img src="images/volume1_pg18.png" class="page">
-                </div>
-            </div>
-            <div class="volume-contents">
-                <div class="pages">
-                    <img src="images/volume2_pg1.png" class="page">
-                    <img src="images/volume2_pg2.png" class="page">
-                </div>
-                <div class="pages">
-                    <img src="images/volume2_pg3.png" class="page">
-                    <img src="images/volume2_pg4.png" class="page">
-                </div>
-                <div class="pages">
-                    <img src="images/volume2_pg5.png" class="page">
-                    <img src="images/volume2_pg6.png" class="page">
-                </div>
-                <div class="pages">
-                    <img src="images/volume2_pg7.png" class="page">
-                    <img src="images/volume2_pg8.png" class="page">
-                </div>
-                <div class="pages">
-                    <img src="images/volume2_pg9.png" class="page">
-                    <img src="images/volume2_pg10.png" class="page">
-                </div>
-                <div class="pages">
-                    <img src="images/volume2_pg11.png" class="page">
-                    <img src="images/volume2_pg12.png" class="page">
-                </div>
-                <div class="pages">
-                    <img src="images/volume2_pg13.png" class="page">
-                    <img src="images/volume2_pg14.png" class="page">
-                </div>
-                <div class="pages">
-                    <img src="images/volume2_pg15.png" class="page">
-                    <img src="images/volume2_pg16.png" class="page">
-                </div>
-                <div class="pages">
-                    <img src="images/volume2_pg17.png" class="page">
-                    <img src="images/volume2_pg18.png" class="page">
-                </div>
-            </div>
-        </div>
-
-        <a class="prev" id="prev" onclick="plusPages(-1)">&#10094;</a>
-        <a class="next" id="next" onclick="plusPages(1)">&#10095;</a>
-    </section>
+    <div id="volume_viewer"></div>
 
     <section class="banner">
         🎃 
