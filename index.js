@@ -1,6 +1,8 @@
 'use strict';
 
 var imageMap = {};
+var onPhone = false;
+var iPhoneMediaQuery = "only screen and (min-device-width : 375px) and (max-device-width : 812px)";
 
 async function imageExists(image_url) {
     if (!(image_url in imageMap)) {
@@ -15,21 +17,48 @@ class Modal extends React.Component {
        super(props);
        this.state = {
             pageIndex: 1,
-            pageOne: `images/volume${this.props.volumeIndex}_pg${1}.png`,
-            pageTwo: `images/volume${this.props.volumeIndex}_pg${2}.png`,
+            pages: [],
        }
+    }
+
+    async componentDidMount() {
+        let page_imgs = []
+        if (onPhone) {
+            page_imgs = await this.loadAllPages();
+        } else {
+            page_imgs.push(`images/volume${this.props.volumeIndex}_pg1.png`);
+            page_imgs.push(`images/volume${this.props.volumeIndex}_pg2.png`);
+        }
+        this.setState({ pages: page_imgs });
+    }
+
+    async loadAllPages() {
+        let pages = [];
+        let count = 0;
+        while (true) {
+            let imagePath = `images/volume${this.props.volumeIndex}_pg${count + 1}.png`;
+            if (await imageExists(imagePath)) {
+                pages.push(imagePath);
+                count += 1;
+            } else {
+                break;
+            }
+        }
+        return pages;
     }
 
     async plusPage(num) {
         let page = this.state.pageIndex + num;
         if (await imageExists(`images/volume${this.props.volumeIndex}_pg${page}.png`)) {
-            this.setState({ pageOne: `images/volume${this.props.volumeIndex}_pg${page}.png` });
+            this.setState({ pages: [`images/volume${this.props.volumeIndex}_pg${page}.png`] });
             this.setState({ pageIndex: page });
             if (await imageExists(`images/volume${this.props.volumeIndex}_pg${page + 1}.png`)) {
-                this.setState({ pageTwo: `images/volume${this.props.volumeIndex}_pg${page + 1}.png` });
-            } else {
-                this.setState({ pageTwo: null });
-            }
+                this.setState({
+                    pages: this.state.pages.concat(
+                        [`images/volume${this.props.volumeIndex}_pg${page + 1}.png`]
+                    )
+                });
+            } 
         }
     }
 
@@ -41,8 +70,9 @@ class Modal extends React.Component {
                 <div className="modal-content" id="modal-contact">
                     <div className="volume-contents">
                         <div className="pages">
-                            <img src={this.state.pageOne} className="page" />
-                            {this.state.pageTwo != null && <img src={this.state.pageTwo} className="page" />}
+                            {this.state.pages.map((img_path, key) =>
+                                <img src={img_path} className="page" key={key}/>
+                            )}
                         </div>
                     </div>
                 </div>
@@ -76,7 +106,6 @@ class VolumeViewer extends React.Component {
             }
         }
         this.setState({ numVols: count });
-        console.log(this.state.numVols);
     }
 
     showModal(i) {
@@ -88,12 +117,14 @@ class VolumeViewer extends React.Component {
     }
 
     renderCover(i) {
-        return (<div className="volume" key={i}>
-                    <img src={`images/volume${i}_cover.png`} className="cover" onClick={e => { this.showModal(i) }} />
-                    <a href={`downloads/volume${i}.zip`} className="download" download>
-                        Download PDF
-                    </a>
-                </div>);
+        return (
+            <div className="volume" key={i}>
+                <img src={`images/volume${i}_cover.png`} className="cover" onClick={e => { this.showModal(i) }} />
+                <a href={`downloads/volume${i}.zip`} className="download" download>
+                    Download PDF
+                </a>
+            </div>
+        );
     }
 
     render() {
@@ -119,6 +150,7 @@ class VolumeViewer extends React.Component {
 }
 
 window.onload = function(e) {
+    onPhone = window.matchMedia(iPhoneMediaQuery).matches;
     const domContainer = document.getElementById('volume_viewer');
     ReactDOM.render(React.createElement(VolumeViewer), domContainer);
 }

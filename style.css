@@ -1,3 +1,9 @@
+body {
+    background-color: mintcream;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 16px;
+}
+
 .title {
     width: 50vw;
     margin-left:auto;
@@ -5,16 +11,6 @@
     padding-top: 0.5em;
     text-align: center;
 }
-
-body {
-    background-color: mintcream;
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 16px;
-}
-
-/* .modal {
-    display: none;
-} */
     
 .volumes {
     height: 90%;
@@ -89,7 +85,7 @@ body {
 
 /* The Close Button */
 .close {
-    color: white;
+    color: black;
     position: absolute;
     top: 10px;
     left: 25px;
@@ -99,7 +95,7 @@ body {
 
 .close:hover,
 .close:focus {
-    color: #999;
+    color: rgba(0, 0, 0, 0.3);
     text-decoration: none;
     cursor: pointer;
 }
@@ -127,7 +123,7 @@ body {
     width: auto;
     padding: 16px;
     margin-top: -50px;
-    color: white;
+    color: black;
     font-weight: bold;
     font-size: 20px;
     transition: 0.6s ease;
@@ -145,5 +141,36 @@ body {
 /* On hover, add a black background color with a little bit see-through */
 .prev:hover,
 .next:hover {
-    background-color: rgba(0, 0, 0, 0.8);
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+
+
+/* iPhone media query */
+@media only screen and (min-device-width : 375px) and (max-device-width : 812px) {
+    .title {
+        width: 80vw;
+        text-align: left;
+    }
+    body {
+        font-size: 36px;
+    }
+    .prev .next {
+        display: none;
+    }
+    .close {
+        color: white;
+        font-size: 180px;
+        line-height: 1;
+    }
+    .modal {
+        background-color: black;
+    }
+    .page:first-child {
+        margin-top: 40px;
+    }
+    .page {
+        display: block;
+        width: 95%;
+    }
 }
