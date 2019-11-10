@@ -12,22 +12,45 @@ async function imageExists(image_url) {
     return imageMap[image_url];
 }
 
+function get_img_path(volume, page) {
+    return `images/volume${volume}_pg${page}.png`;
+}
+
+function create_img(volume, page) {
+    return <img src={get_img_path(volume, page)} className="page" key={page - 1}/>
+}
+
 class Modal extends React.Component {
     constructor(props) {
        super(props);
        this.state = {
-            pageIndex: 1,
+            pageIndex: 0,
             pages: [],
        }
+       this.handleArrowKey = this.handleArrowKey.bind(this);
+    }
+
+    handleArrowKey(e) {
+        var event = window.event ? window.event : e;
+        if (event.keyCode == 37) {
+            this.plusPage(-2);
+        } else if (event.keyCode == 39) {
+            this.plusPage(2);
+        }
+    }
+
+    componentWillUnmount() {
+        document.removeEventListener("keydown", this.handleArrowKey, false);
     }
 
     async componentDidMount() {
+        document.addEventListener("keydown", this.handleArrowKey, false);
         let page_imgs = []
         if (onPhone) {
             page_imgs = await this.loadAllPages();
         } else {
-            page_imgs.push(`images/volume${this.props.volumeIndex}_pg1.png`);
-            page_imgs.push(`images/volume${this.props.volumeIndex}_pg2.png`);
+            page_imgs.push(create_img(this.props.volumeIndex, 1));
+            page_imgs.push(create_img(this.props.volumeIndex, 2));
         }
         this.setState({ pages: page_imgs });
     }
@@ -36,10 +59,9 @@ class Modal extends React.Component {
         let pages = [];
         let count = 0;
         while (true) {
-            let imagePath = `images/volume${this.props.volumeIndex}_pg${count + 1}.png`;
-            if (await imageExists(imagePath)) {
-                pages.push(imagePath);
+            if (await imageExists(get_img_path(this.props.volumeIndex, count + 1))) {
                 count += 1;
+                pages.push(create_img(this.props.volumeIndex, count));
             } else {
                 break;
             }
@@ -48,17 +70,30 @@ class Modal extends React.Component {
     }
 
     async plusPage(num) {
-        let page = this.state.pageIndex + num;
-        if (await imageExists(`images/volume${this.props.volumeIndex}_pg${page}.png`)) {
-            this.setState({ pages: [`images/volume${this.props.volumeIndex}_pg${page}.png`] });
-            this.setState({ pageIndex: page });
-            if (await imageExists(`images/volume${this.props.volumeIndex}_pg${page + 1}.png`)) {
-                this.setState({
-                    pages: this.state.pages.concat(
-                        [`images/volume${this.props.volumeIndex}_pg${page + 1}.png`]
-                    )
-                });
-            } 
+        let index = this.state.pageIndex + num;
+        if (0 <= index) {
+            if (index >= this.state.pages.length) {
+                let page = index + 1;
+                if (await imageExists(get_img_path(this.props.volumeIndex, page))) {
+                    this.setState({
+                        pages: this.state.pages.concat(
+                            [create_img(this.props.volumeIndex, page)]
+                        )
+                    });
+                    this.setState({ pageIndex: index });
+                    if (await imageExists(get_img_path(this.props.volumeIndex, page + 1))) {
+                        this.setState({
+                            pages: this.state.pages.concat(
+                                [create_img(this.props.volumeIndex, page + 1)]
+                            )
+                        });
+                    } else {
+                        this.setState({ pages: this.state.pages.concat(null) });
+                    }
+                }
+            } else {
+                this.setState({ pageIndex: index });
+            }
         }
     }
 
@@ -70,9 +105,7 @@ class Modal extends React.Component {
                 <div className="modal-content" id="modal-contact">
                     <div className="volume-contents">
                         <div className="pages">
-                            {this.state.pages.map((img_path, key) =>
-                                <img src={img_path} className="page" key={key}/>
-                            )}
+                            {(onPhone)? this.state.pages : this.state.pages.slice(this.state.pageIndex, this.state.pageIndex + 2)}
                         </div>
                     </div>
                 </div>
@@ -89,7 +122,6 @@ class VolumeViewer extends React.Component {
        super(props);
        this.state = {
             volumeIndex: null,
-            showModal: false,
             numVols: 2,
        };
        this.countVols();

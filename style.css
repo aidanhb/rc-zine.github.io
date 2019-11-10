@@ -144,8 +144,6 @@ body {
     background-color: rgba(0, 0, 0, 0.3);
 }
 
-
-
 /* iPhone media query */
 @media only screen and (min-device-width : 375px) and (max-device-width : 812px) {
     .title {
