@@ -4,11 +4,26 @@ var imageMap = {};
 var onPhone = false;
 var iPhoneMediaQuery = "only screen and (min-device-width : 375px) and (max-device-width : 812px)";
 
+function getImage(image_url) {
+    var promise = new Promise(function(resolve) {
+        let img = new Image();
+        img.src = image_url;
+        img.onload = function() {
+            resolve(img.width > 0);
+        }
+        img.onerror = function() {
+            resolve(false);
+        }
+    });
+    return promise;
+}
+
 async function imageExists(image_url) {
     if (!(image_url in imageMap)) {
-        let response = await fetch(image_url);
-        imageMap[image_url] = response.ok;
+        let prom = await getImage(image_url);
+        imageMap[image_url] = prom;
     }
+    console.log(imageMap[image_url]);
     return imageMap[image_url];
 }
 
@@ -109,6 +124,7 @@ class VolumeViewer extends React.Component {
             volumeIndex: null,
             numVols: 2,
        };
+       console.log("making a colume viewer");
        this.countVols();
     }
 
@@ -166,8 +182,10 @@ class VolumeViewer extends React.Component {
     }
 }
 
-window.onload = function(e) {
+function load(e) {
     onPhone = window.matchMedia(iPhoneMediaQuery).matches;
     const domContainer = document.getElementById('volume_viewer');
     ReactDOM.render(React.createElement(VolumeViewer), domContainer);
 }
+
+$(load);
