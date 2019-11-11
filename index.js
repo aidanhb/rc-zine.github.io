@@ -24,9 +24,9 @@ class Modal extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-                prevIndex: null,
-                pageIndex: 0,
-                pages: [],
+            prevIndex: null,
+            pageIndex: 0,
+            pages: [],
         }
         this.handleArrowKey = this.handleArrowKey.bind(this);
     }
@@ -74,7 +74,7 @@ class Modal extends React.Component {
         let index = this.state.pageIndex + num;
         if (0 <= index) {
             this.loadPages(index + 8);
-            if (index < this.state.pages.length - 2) {
+            if (index <= this.state.pages.length - 2) {
                 this.setState({ prevIndex: this.state.pageIndex, pageIndex: index });
             }
         }
@@ -95,9 +95,8 @@ class Modal extends React.Component {
                         </div>
                     </div>
                 </div>
-    
-                <a className="prev" id="prev" onClick={e => this.plusPage(-2)}>&#10094;</a>
-                <a className="next" id="next" onClick={e => this.plusPage(2)}>&#10095;</a>
+                {(this.state.pageIndex > 0)? <a className="prev" id="prev" onClick={e => this.plusPage(-2)}>&#10094;</a> : null}
+                {(this.state.pageIndex < this.state.pages.length - 2)? <a className="next" id="next" onClick={e => this.plusPage(2)}>&#10095;</a> : null}
             </section>
         );
     }
