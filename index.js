@@ -22,12 +22,13 @@ function create_img(volume, page) {
 
 class Modal extends React.Component {
     constructor(props) {
-       super(props);
-       this.state = {
-            pageIndex: 0,
-            pages: [],
-       }
-       this.handleArrowKey = this.handleArrowKey.bind(this);
+        super(props);
+        this.state = {
+                prevIndex: null,
+                pageIndex: 0,
+                pages: [],
+        }
+        this.handleArrowKey = this.handleArrowKey.bind(this);
     }
 
     handleArrowKey(e) {
@@ -45,54 +46,36 @@ class Modal extends React.Component {
 
     async componentDidMount() {
         document.addEventListener("keydown", this.handleArrowKey, false);
-        let page_imgs = []
         if (onPhone) {
-            page_imgs = await this.loadAllPages();
+            await this.loadPages(1000);
         } else {
-            page_imgs.push(create_img(this.props.volumeIndex, 1));
-            page_imgs.push(create_img(this.props.volumeIndex, 2));
+            await this.loadPages(8);
         }
-        this.setState({ pages: page_imgs });
     }
 
-    async loadAllPages() {
-        let pages = [];
-        let count = 0;
-        while (true) {
-            if (await imageExists(get_img_path(this.props.volumeIndex, count + 1))) {
-                count += 1;
-                pages.push(create_img(this.props.volumeIndex, count));
-            } else {
-                break;
+    async loadPages(end) {
+        if (end >= this.state.pages.length) {
+            console.log(`${end} is greater than ${this.state.pages.length}`);
+            let to_concat = [];
+            let start = this.state.pages.length;
+            for ( var i = start + 1; i <= end; i ++ ) {
+                if (await imageExists(get_img_path(this.props.volumeIndex, i))) {
+                    to_concat.push(create_img(this.props.volumeIndex, i));
+                } else {
+                    console.log(`Page ${i} doesnt exist. Breaking!`);
+                    break;
+                }
             }
+            this.setState({ pages: this.state.pages.concat(to_concat) });
         }
-        return pages;
     }
 
     async plusPage(num) {
         let index = this.state.pageIndex + num;
         if (0 <= index) {
-            if (index >= this.state.pages.length) {
-                let page = index + 1;
-                if (await imageExists(get_img_path(this.props.volumeIndex, page))) {
-                    this.setState({
-                        pages: this.state.pages.concat(
-                            [create_img(this.props.volumeIndex, page)]
-                        )
-                    });
-                    this.setState({ pageIndex: index });
-                    if (await imageExists(get_img_path(this.props.volumeIndex, page + 1))) {
-                        this.setState({
-                            pages: this.state.pages.concat(
-                                [create_img(this.props.volumeIndex, page + 1)]
-                            )
-                        });
-                    } else {
-                        this.setState({ pages: this.state.pages.concat(null) });
-                    }
-                }
-            } else {
-                this.setState({ pageIndex: index });
+            this.loadPages(index + 8);
+            if (index < this.state.pages.length - 2) {
+                this.setState({ prevIndex: this.state.pageIndex, pageIndex: index });
             }
         }
     }
@@ -104,6 +87,9 @@ class Modal extends React.Component {
     
                 <div className="modal-content" id="modal-contact">
                     <div className="volume-contents">
+                        <div className="pages">
+                            {(onPhone || this.state.prevIndex == null)? null : this.state.pages.slice(this.state.prevIndex, this.state.prevIndex + 2)}
+                        </div>
                         <div className="pages">
                             {(onPhone)? this.state.pages : this.state.pages.slice(this.state.pageIndex, this.state.pageIndex + 2)}
                         </div>

@@ -102,6 +102,7 @@ body {
 
 /* Hide the slides by default */
 .pages {
+    position: absolute;
     justify-content: center;
     text-align: center;
     flex-wrap: wrap;    
