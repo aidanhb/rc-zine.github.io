@@ -43,24 +43,26 @@ class Modal extends React.Component {
             pageIndex: 0,
             pages: [],
         }
-        this.handleArrowKey = this.handleArrowKey.bind(this);
+        this.handleKey = this.handleKey.bind(this);
     }
 
-    handleArrowKey(e) {
+    handleKey(e) {
         var event = window.event ? window.event : e;
         if (event.keyCode == 37) {
             this.plusPage(-2);
         } else if (event.keyCode == 39) {
             this.plusPage(2);
+        } else if (event.key === "Escape") {
+            this.props.handleClose();
         }
     }
 
     componentWillUnmount() {
-        document.removeEventListener("keydown", this.handleArrowKey, false);
+        document.removeEventListener("keydown", this.handleKey, false);
     }
 
     async componentDidMount() {
-        document.addEventListener("keydown", this.handleArrowKey, false);
+        document.addEventListener("keydown", this.handleKey, false);
         if (onPhone) {
             await this.loadPages(1000);
         } else {
