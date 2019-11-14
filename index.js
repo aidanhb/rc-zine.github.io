@@ -90,7 +90,7 @@ class Modal extends React.Component {
     async plusPage(num) {
         let index = this.state.pageIndex + num;
         if (0 <= index) {
-            this.loadPages(index + 8);
+            await this.loadPages(index + 8);
             if (index <= this.state.pages.length - 2) {
                 this.setState({ prevIndex: this.state.pageIndex, pageIndex: index });
             }
