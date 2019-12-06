@@ -152,8 +152,18 @@ class VolumeViewer extends React.Component {
     }
 
     renderCover(i) {
+        let badge = (
+            <div className="badge">
+                <div className="link">
+                    <a href="https://github.com/aidanhb/zine-formatter" className="githubLink">
+                        Made with the Zine Formatter!
+                    </a>
+                </div>
+            </div>)
+
         return (
             <div className="volume" key={i}>
+                {(i >= 3)? badge: null}
                 <img src={`images/volume${i}_cover.png`} className="cover" onClick={e => { this.showModal(i) }} />
                 <a href={`downloads/volume${i}.zip`} className="download" download>
                     Download PDF
@@ -186,6 +196,7 @@ class VolumeViewer extends React.Component {
 
 function load(e) {
     onPhone = window.matchMedia(iPhoneMediaQuery).matches;
+    console.log(onPhone);
     const domContainer = document.getElementById('volume_viewer');
     ReactDOM.render(React.createElement(VolumeViewer), domContainer);
 }

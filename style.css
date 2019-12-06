@@ -27,6 +27,7 @@ body {
 }
 
 .volume {
+    position: relative;
     display: inline-block;
     width: 20em;
     height: 25em;
@@ -38,6 +39,31 @@ body {
     transition: 0.3s ease;
     width: 100%;
     height: 100%;
+}
+
+.badge {
+    transform: rotate(-30deg);
+    top: -1em;
+    right: -2em;
+    padding: 1em;
+    padding-top: 3em;
+    color: white;
+    position: absolute;
+    width: 10em;
+    height: 8em;
+    background-size: contain;
+    background-image: url("images/badge.png");
+}
+
+.badge .link {
+    width: 50%;
+    margin: 0 auto;
+}
+
+.githubLink {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 1.1em;
+    color: white;
 }
 
 .banner {
