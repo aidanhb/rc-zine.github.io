@@ -42,6 +42,7 @@ body {
 }
 
 .badge {
+    transition: 0.3s ease;
     transform: rotate(-30deg);
     top: -1em;
     right: -2em;
@@ -55,7 +56,13 @@ body {
     background-image: url("images/badge.png");
 }
 
+.badge:hover {
+    transform: scale(1.1);
+    color: cornflowerblue;
+}
+
 .badge .link {
+    transition: 0.3s ease;
     width: 50%;
     margin: 0 auto;
 }
